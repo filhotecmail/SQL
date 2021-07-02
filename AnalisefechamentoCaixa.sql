@@ -21,7 +21,7 @@ RETURNS (
     "Abertura" VARCHAR(39),
     "Fechamento" VARCHAR(40),
     "( + ) R$ T.Liquido" VARCHAR(24),
-    "(=)Vol de vendas" BIGINT,
+    "( = ) Vol de vendas" BIGINT,
     "( - ) R$ T.Estornado" VARCHAR(24),
     "( = ) R$ T.Cancelamentos" VARCHAR(24),
     "( + ) R$ T.Dinheiro" VARCHAR(24),
