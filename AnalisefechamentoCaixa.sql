@@ -49,41 +49,41 @@ BEGIN
                        ||EXTRACT( YEAR FROM F.CX02ABDATA )
                        ||' as '
                        ||EXTRACT( HOUR FROM F.CX03ABHORA)||':'
-                       ||EXTRACT( MINUTE FROM F.CX03ABHORA)AS "Abertura",
+                       ||EXTRACT( MINUTE FROM F.CX03ABHORA),
           /*{FORMATA A DATA E HORA DO FECHAMENTO DE CAIXA}*/
           'Fechado em '||LPAD(EXTRACT( DAY FROM F.CX42DATAFECH ),2,0)||'/'
                        ||LPAD(EXTRACT( MONTH FROM F.CX42DATAFECH ),2,0)||'/'
                        ||EXTRACT( YEAR FROM F.CX42DATAFECH )
                        ||' as '
                        ||EXTRACT( HOUR FROM F.CX43HORAFECH)||':'
-                       ||EXTRACT( MINUTE FROM F.CX43HORAFECH)AS "Fechamento",
+                       ||EXTRACT( MINUTE FROM F.CX43HORAFECH),
     
-           'R$ '||SUM(F.CX13VLTVENDASLIQ) "( + ) R$ T.Liquido",
-           SUM(F.CX16QTDTVVALIDAS) AS "(=)Vol de vendas",
-           'R$ '||SUM(F.CX10TOTALESTORNOS) AS "( - ) R$ T.Estornado",
-           'R$ '||SUM(IIF( C.VENDA_SITUACAO  = 'CANCELADA', C.VENDA_VLTOTAL,0.00))AS "( = ) R$ T.Cancelamentos",
-           'R$ '||SUM( F.CX17TOTALDINHEIRO ) AS "( + ) R$ T.Dinheiro",
-           'R$ '||SUM( F.CX18TOTALCDEBITO ) AS "( + ) R$ T.C Debito",
-           'R$ '||SUM( F.CX19TOTALCCREDITO ) AS "( + ) R$ T.C Credito",
-           'R$ '||SUM( F.CX20TOTALCRLOJA ) AS "( + ) R$ T.C loja",
-           'R$ '||SUM( F.CX21TOTALCHEQUE ) AS "( + ) R$ T.Cheque",
-           'R$ '||SUM( F.CX22TOTALVREFEICAO ) AS "( + ) R$ T.V Refeição",
-           'R$ '||SUM( F.CX23TOTALVALIMENT ) AS "( + ) R$ T. V Alimentação",
-           'R$ '||SUM( F.CX24TOTALMOVOUTROS ) AS "( + ) R$ T. Outros",
-           'R$ '||SUM( F.CX24TOTALVLPRESENTE ) AS "( + ) R$ T. V Presente",
-           'R$ '||SUM( F.CX26DINHEIROGV ) AS "( = ) R$ T. Dinheiro GV",
+           'R$ '||SUM(F.CX13VLTVENDASLIQ),
+                  SUM(F.CX16QTDTVVALIDAS),
+           'R$ '||SUM(F.CX10TOTALESTORNOS),
+           'R$ '||SUM(IIF( C.VENDA_SITUACAO  = 'CANCELADA', C.VENDA_VLTOTAL,0.00)),
+           'R$ '||SUM( F.CX17TOTALDINHEIRO ),
+           'R$ '||SUM( F.CX18TOTALCDEBITO ),
+           'R$ '||SUM( F.CX19TOTALCCREDITO ),
+           'R$ '||SUM( F.CX20TOTALCRLOJA ),
+           'R$ '||SUM( F.CX21TOTALCHEQUE ),
+           'R$ '||SUM( F.CX22TOTALVREFEICAO ),
+           'R$ '||SUM( F.CX23TOTALVALIMENT ),
+           'R$ '||SUM( F.CX24TOTALMOVOUTROS ),
+           'R$ '||SUM( F.CX24TOTALVLPRESENTE ),
+           'R$ '||SUM( F.CX26DINHEIROGV ),
          /*{RECUPERA O VALOR FISCAL EMITIDO NO TERMINAL PDV NA DATA DO FECHAMENTO}*/
            'R$ '||COALESCE(( (SELECT SUM( VV.VENDA_VLTOTAL)
                        FROM MOVPDV_VENDAS VV
                        WHERE VV.SAT_SITUACAO = 'EMITIDO'
                        AND VV.PDV_NUMPDV = F.CX51NUMPDV
-                       AND VV.PDV_IDCAIXA = F.CX01ABID )  ),0) AS "( = ) R$ T. Fiscal",
+                       AND VV.PDV_IDCAIXA = F.CX01ABID )  ),0),
          /*{RECUPERA O VOLUME FISCAL EMITIDO NO TERMINAL PDV NA DATA DO FECHAMENTO}*/
            COALESCE(( (SELECT COUNT( VV.ID)
                        FROM MOVPDV_VENDAS VV
                        WHERE VV.SAT_SITUACAO = 'EMITIDO'
                        AND VV.PDV_NUMPDV = F.CX51NUMPDV
-                       AND VV.PDV_IDCAIXA = F.CX01ABID )  ),0) AS "( = ) Volume fiscal"
+                       AND VV.PDV_IDCAIXA = F.CX01ABID )  ),0)
      FROM POOLS_CXFECHAMENTO F
           JOIN MOVPDV_VENDAS C ON ( C.PDV_NUMPDV = F.CX51NUMPDV
                                AND  C.PDV_IDCAIXA = F.CX01ABID  )
