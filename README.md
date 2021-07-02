@@ -1,6 +1,6 @@
 # SQL
 Repositório de SQL´s geradas
-# AnaliseefechamentoCaixa
+# Analise e fechamento dos Caixas
   O SQL montado consiste em entregar um ResultSet de dados para a aplicação de forma tratada e formatada para uma leitura dos dados mais concisa.
   segue abaixo o exemplo de resultado.
   
